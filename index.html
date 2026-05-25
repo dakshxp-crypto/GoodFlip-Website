@@ -38,6 +38,10 @@
           top: 1.5rem;
           right: 1.5rem;
         }
+        @media (max-width: 767.98px) {
+          h2.mb-12 { margin-bottom: 1.25rem; }
+          section.py-16 { padding-top: 2.5rem; padding-bottom: 2.5rem; }
+        }
       </style>
       <script type="module" crossorigin>(function(){const p=document.createElement("link").relList;if(p&&p.supports&&p.supports("modulepreload"))return;for(const z of document.querySelectorAll('link[rel="modulepreload"]'))I(z);new MutationObserver(z=>{for(const x of z)if(x.type==="childList")for(const R of x.addedNodes)R.tagName==="LINK"&&R.rel==="modulepreload"&&I(R)}).observe(document,{childList:!0,subtree:!0});function u(z){const x={};return z.integrity&&(x.integrity=z.integrity),z.referrerPolicy&&(x.referrerPolicy=z.referrerPolicy),z.crossOrigin==="use-credentials"?x.credentials="include":z.crossOrigin==="anonymous"?x.credentials="omit":x.credentials="same-origin",x}function I(z){if(z.ep)return;z.ep=!0;const x=u(z);fetch(z.href,x)}})();var wi={exports:{}},Un={},Oi={exports:{}},Ae={};/**
  * @license React
@@ -224,7 +228,7 @@ The GoodFlip Ring tracks:`,bullets:["Total energy burn","Activity efficiency","R
             const image = document.querySelector(`img[alt="${metabolicScoreAlt}"]`);
 
             if (!image) {
-              requestAnimationFrame(refineMetabolicScoreCard);
+              setTimeout(refineMetabolicScoreCard, 60);
               return;
             }
 
@@ -481,7 +485,7 @@ The GoodFlip Ring tracks:`,bullets:["Total energy burn","Activity efficiency","R
             const heading = findHeading("h1", heroTitle);
 
             if (!heading) {
-              requestAnimationFrame(applyHeroMobileLayoutFix);
+              setTimeout(applyHeroMobileLayoutFix, 60);
               return;
             }
 
@@ -546,7 +550,7 @@ The GoodFlip Ring tracks:`,bullets:["Total energy burn","Activity efficiency","R
             const heading = findHeading("h1", heroTitle);
 
             if (!heading) {
-              requestAnimationFrame(replaceHeroPillarImages);
+              setTimeout(replaceHeroPillarImages, 60);
               return;
             }
 
@@ -568,7 +572,7 @@ The GoodFlip Ring tracks:`,bullets:["Total energy burn","Activity efficiency","R
             };
 
             if (!(carousel instanceof HTMLElement)) {
-              requestAnimationFrame(replaceHeroPillarImages);
+              setTimeout(replaceHeroPillarImages, 60);
               return;
             }
 
@@ -602,7 +606,7 @@ The GoodFlip Ring tracks:`,bullets:["Total energy burn","Activity efficiency","R
             );
 
             if (!anchorPara) {
-              requestAnimationFrame(applyUniversalTruthMobileMapScale);
+              setTimeout(applyUniversalTruthMobileMapScale, 60);
               return;
             }
 
@@ -872,7 +876,7 @@ The GoodFlip Ring tracks:`,bullets:["Total energy burn","Activity efficiency","R
           function initHeroFlipWord() {
             const el = document.getElementById("hero-flip-word");
             if (!el) {
-              requestAnimationFrame(initHeroFlipWord);
+              setTimeout(initHeroFlipWord, 60);
               return;
             }
             if (heroFlipStarted) return;
@@ -917,22 +921,28 @@ The GoodFlip Ring tracks:`,bullets:["Total energy burn","Activity efficiency","R
             if (pending) setTimeout(assignAnchorIds, 80);
           }
 
-          window.addEventListener("DOMContentLoaded", () => {
-            assignAnchorIds();
-            initMetabolicScoreNumber();
-            requestAnimationFrame(initHeroFlipWord);
-            requestAnimationFrame(refineMetabolicScoreCard);
-            requestAnimationFrame(removeDownloadButtonPhoneIcons);
-            requestAnimationFrame(replaceSupplementsPcosCardImage);
-            requestAnimationFrame(removeDesktopNavMenuSurface);
-            requestAnimationFrame(updateStickyNavBackground);
-            requestAnimationFrame(applyHeroMobileLayoutFix);
-            requestAnimationFrame(replaceHeroPillarImages);
-            requestAnimationFrame(applyUniversalTruthMobileMapScale);
-            requestAnimationFrame(syncLifestyleAppSection);
-            requestAnimationFrame(applyProgramsSectionSpacing);
-            requestAnimationFrame(applyMetabolismCardScrollFix);
-          });
+          function bootstrapEnhancements() {
+            const run = (f) => { try { f(); } catch (e) {} };
+            run(assignAnchorIds);
+            run(initMetabolicScoreNumber);
+            run(initHeroFlipWord);
+            run(refineMetabolicScoreCard);
+            run(removeDownloadButtonPhoneIcons);
+            run(replaceSupplementsPcosCardImage);
+            run(removeDesktopNavMenuSurface);
+            run(updateStickyNavBackground);
+            run(applyHeroMobileLayoutFix);
+            run(replaceHeroPillarImages);
+            run(applyUniversalTruthMobileMapScale);
+            run(syncLifestyleAppSection);
+            run(applyProgramsSectionSpacing);
+            run(applyMetabolismCardScrollFix);
+          }
+          if (document.readyState === "loading") {
+            window.addEventListener("DOMContentLoaded", bootstrapEnhancements);
+          } else {
+            bootstrapEnhancements();
+          }
           window.addEventListener("resize", removeDesktopNavMenuSurface);
           window.addEventListener("resize", replaceSupplementsPcosCardImage);
           window.addEventListener("resize", applyHeroMobileLayoutFix);
